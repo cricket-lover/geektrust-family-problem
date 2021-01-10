@@ -86,12 +86,6 @@ describe("#Family", () => {
     let actual;
 
     describe("Son", () => {
-      it("should give son when the parent has only one son", () => {
-        expected = "Yodhan";
-        actual = family.getRelationship("Jaya", "Son");
-        assert.deepStrictEqual(actual, expected);
-      });
-
       it("should give all sons when the parent has many sons", () => {
         expected = "Asva Vyas";
         actual = family.getRelationship("Vyan", "Son");
@@ -106,12 +100,6 @@ describe("#Family", () => {
     });
 
     describe("Daughter", () => {
-      it("should give daughter when the parent has only one daughter", () => {
-        expected = "Satya";
-        actual = family.getRelationship("Shan", "Daughter");
-        assert.deepStrictEqual(actual, expected);
-      });
-
       it("should give all daughters when the parent has many daughters", () => {
         expected = "Vila Chika";
         actual = family.getRelationship("Lika", "Daughter");
@@ -126,13 +114,7 @@ describe("#Family", () => {
     });
 
     describe("Siblings", () => {
-      it("should give Siblings when the parent has only one Sibling", () => {
-        expected = "Laki";
-        actual = family.getRelationship("Lavnya", "Siblings");
-        assert.deepStrictEqual(actual, expected);
-      });
-
-      it("should give all Siblingss when the parent has many Siblingss", () => {
+      it("should give all Siblings when the parent has many Siblings", () => {
         expected = "Dritha Vritha";
         actual = family.getRelationship("Tritha", "Siblings");
         assert.deepStrictEqual(actual, expected);
@@ -141,6 +123,20 @@ describe("#Family", () => {
       it("should give none when the person has no siblings", () => {
         expected = "NONE";
         actual = family.getRelationship("Shan", "Siblings");
+        assert.deepStrictEqual(actual, expected);
+      });
+    });
+
+    describe("getParents", () => {
+      it("should give both the parents when the parent are known", () => {
+        expected = { mother: "Amba", father: "Chit" };
+        actual = family.getParents("Vritha");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give undefined when the person has no siblings", () => {
+        expected = { mother: undefined, father: undefined };
+        actual = family.getParents("Shan");
         assert.deepStrictEqual(actual, expected);
       });
     });

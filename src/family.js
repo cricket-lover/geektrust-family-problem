@@ -51,6 +51,12 @@ class Family {
     return siblings;
   }
 
+  getParents(name) {
+    const mother = this.family[name].mother;
+    const father = mother ? this.family[mother].husband : mother;
+    return { mother, father };
+  }
+
   getRelationship(name, relation) {
     if (!this.doesPersonExist(name)) {
       return "PERSON_NOT_FOUND";
@@ -73,6 +79,10 @@ class Family {
         break;
 
       case "Siblings":
+        relationship = this.getSiblings(name);
+        break;
+
+      case "Paternal-Uncle":
         relationship = this.getSiblings(name);
         break;
 
