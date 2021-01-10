@@ -3,7 +3,7 @@ class Family {
     this.family = initialFamily;
   }
 
-  doesPersonExits(name) {
+  doesPersonExist(name) {
     return this.family[name] !== undefined;
   }
 
@@ -13,7 +13,7 @@ class Family {
   }
 
   addChild(motherName, newChild, gender) {
-    if (!this.doesPersonExits(motherName)) {
+    if (!this.doesPersonExist(motherName)) {
       return "PERSON_NOT_FOUND";
     }
 

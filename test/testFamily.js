@@ -1,26 +1,18 @@
 const chai = require("chai");
 const assert = chai.assert;
 const { Family } = require("../src/family");
+const presetFamily = require("../presetFamily");
 
 describe("#Family", () => {
-  const initailFamily = {
-    Shan: { gender: "Male", wife: "Anga" },
-    Anga: {
-      gender: "Female",
-      husband: "Shan",
-      children: ["Chit", "Ish", "Vich", "Aras", "Satya"],
-    },
-    Chit: { gender: "Male", mother: "Anga" },
-  };
-  const family = new Family(initailFamily);
+  const family = new Family(presetFamily);
 
-  describe("doesPersonExits", () => {
-    it("should give true when the person exits in the family", () => {
-      assert.isTrue(family.doesPersonExits("Shan"));
+  describe("doesPersonExist", () => {
+    it("should give true when the person exist in the family", () => {
+      assert.isTrue(family.doesPersonExist("Shan"));
     });
 
-    it("should give false when the person exits in the family", () => {
-      assert.isFalse(family.doesPersonExits("Unknown"));
+    it("should give false when the person exist in the family", () => {
+      assert.isFalse(family.doesPersonExist("Unknown"));
     });
   });
 
@@ -38,7 +30,35 @@ describe("#Family", () => {
     });
 
     it("should give null when the person does not have any spoce", () => {
-      assert.isUndefined(family.getSpouce("Chit"));
+      assert.isUndefined(family.getSpouce("Vasa"));
+    });
+  });
+
+  describe("addChild", () => {
+    let expected;
+
+    it("should give child addition success message when the child added successfully", () => {
+      expected = "CHILD_ADDITION_SUCCEEDED";
+      assert.deepStrictEqual(
+        family.addChild("Chitra", "Aria", "Female"),
+        expected
+      );
+    });
+
+    it("should give child addition failed message when the child addition failed", () => {
+      expected = "CHILD_ADDITION_FAILED";
+      assert.deepStrictEqual(
+        family.addChild("Asva", "Vani", "Female"),
+        expected
+      );
+    });
+
+    it("should give person not found message when the person does not exist in ", () => {
+      expected = "PERSON_NOT_FOUND";
+      assert.deepStrictEqual(
+        family.addChild("Pjali", "Srutak", "Male"),
+        expected
+      );
     });
   });
 });

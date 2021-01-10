@@ -7,7 +7,7 @@ describe("#processArgs", () => {
     it("should give back the respective outputs message for child addition commands", () => {
       const commands = [
         "ADD_CHILD Anga Phani Male",
-        "ADD_CHILD Padma Phani Male",
+        "ADD_CHILD Unknown Phani Male",
         "ADD_CHILD Shan Phani Male",
       ];
 
