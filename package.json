@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/cricket-lover/geektrust-family-problem#readme",
   "devDependencies": {
+    "chai": "^4.2.0",
     "mocha": "^8.2.1"
   }
 }
