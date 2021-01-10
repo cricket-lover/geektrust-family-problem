@@ -44,6 +44,13 @@ class Family {
     return children;
   }
 
+  getSiblings(name) {
+    const motherName = this.family[name].mother;
+    const mother = this.family[motherName] || { children: [] };
+    const siblings = mother.children.filter((child) => child !== name);
+    return siblings;
+  }
+
   getRelationship(name, relation) {
     if (!this.doesPersonExist(name)) {
       return "PERSON_NOT_FOUND";
@@ -65,11 +72,15 @@ class Family {
         );
         break;
 
+      case "Siblings":
+        relationship = this.getSiblings(name);
+        break;
+
       default:
         break;
     }
 
-    return relationship;
+    return relationship.length ? relationship.join(" ") : "NONE";
   }
 }
 

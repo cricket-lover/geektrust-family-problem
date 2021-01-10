@@ -85,40 +85,64 @@ describe("#Family", () => {
     let expected;
     let actual;
 
-    it("should give son when the parent has only one son", () => {
-      expected = ["Yodhan"];
-      actual = family.getRelationship("Jaya", "Son");
-      assert.deepStrictEqual(actual, expected);
+    describe("Son", () => {
+      it("should give son when the parent has only one son", () => {
+        expected = "Yodhan";
+        actual = family.getRelationship("Jaya", "Son");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give all sons when the parent has many sons", () => {
+        expected = "Asva Vyas";
+        actual = family.getRelationship("Vyan", "Son");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give none when the parent has no sons", () => {
+        expected = "NONE";
+        actual = family.getRelationship("Ish", "Son");
+        assert.deepStrictEqual(actual, expected);
+      });
     });
 
-    it("should give all sons when the parent has many sons", () => {
-      expected = ["Asva", "Vyas"];
-      actual = family.getRelationship("Vyan", "Son");
-      assert.deepStrictEqual(actual, expected);
+    describe("Daughter", () => {
+      it("should give daughter when the parent has only one daughter", () => {
+        expected = "Satya";
+        actual = family.getRelationship("Shan", "Daughter");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give all daughters when the parent has many daughters", () => {
+        expected = "Vila Chika";
+        actual = family.getRelationship("Lika", "Daughter");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give none when parent has no daugther", () => {
+        expected = "NONE";
+        actual = family.getRelationship("Ish", "Daughter");
+        assert.deepStrictEqual(actual, expected);
+      });
     });
 
-    it("should give all sons when the parent has many sons", () => {
-      expected = [];
-      actual = family.getRelationship("Ish", "Son");
-      assert.deepStrictEqual(actual, expected);
-    });
+    describe("Siblings", () => {
+      it("should give Siblings when the parent has only one Sibling", () => {
+        expected = "Laki";
+        actual = family.getRelationship("Lavnya", "Siblings");
+        assert.deepStrictEqual(actual, expected);
+      });
 
-    it("should give daughter when the parent has only one daughter", () => {
-      expected = ["Satya"];
-      actual = family.getRelationship("Shan", "Daughter");
-      assert.deepStrictEqual(actual, expected);
-    });
+      it("should give all Siblingss when the parent has many Siblingss", () => {
+        expected = "Dritha Vritha";
+        actual = family.getRelationship("Tritha", "Siblings");
+        assert.deepStrictEqual(actual, expected);
+      });
 
-    it("should give all daughters when the parent has many daughters", () => {
-      expected = ["Vila", "Chika"];
-      actual = family.getRelationship("Lika", "Daughter");
-      assert.deepStrictEqual(actual, expected);
-    });
-
-    it("should give all sons when the parent has many sons", () => {
-      expected = [];
-      actual = family.getRelationship("Ish", "Daughter");
-      assert.deepStrictEqual(actual, expected);
+      it("should give none when the person has no siblings", () => {
+        expected = "NONE";
+        actual = family.getRelationship("Shan", "Siblings");
+        assert.deepStrictEqual(actual, expected);
+      });
     });
   });
 });
