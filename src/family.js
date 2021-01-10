@@ -45,13 +45,23 @@ class Family {
   }
 
   getRelationship(name, relation) {
+    if (!this.doesPersonExist(name)) {
+      return "PERSON_NOT_FOUND";
+    }
+
     let relationship = [];
+    let children = this.getChildren(name);
 
     switch (relation) {
       case "Son":
-        const children = this.getChildren(name);
-        relationship = children.filter(
+        children = relationship = children.filter(
           (child) => this.family[child].gender === "Male"
+        );
+        break;
+
+      case "Daughter":
+        relationship = children.filter(
+          (child) => this.family[child].gender === "Female"
         );
         break;
 

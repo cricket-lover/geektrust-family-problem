@@ -96,5 +96,29 @@ describe("#Family", () => {
       actual = family.getRelationship("Vyan", "Son");
       assert.deepStrictEqual(actual, expected);
     });
+
+    it("should give all sons when the parent has many sons", () => {
+      expected = [];
+      actual = family.getRelationship("Ish", "Son");
+      assert.deepStrictEqual(actual, expected);
+    });
+
+    it("should give daughter when the parent has only one daughter", () => {
+      expected = ["Satya"];
+      actual = family.getRelationship("Shan", "Daughter");
+      assert.deepStrictEqual(actual, expected);
+    });
+
+    it("should give all daughters when the parent has many daughters", () => {
+      expected = ["Vila", "Chika"];
+      actual = family.getRelationship("Lika", "Daughter");
+      assert.deepStrictEqual(actual, expected);
+    });
+
+    it("should give all sons when the parent has many sons", () => {
+      expected = [];
+      actual = family.getRelationship("Ish", "Daughter");
+      assert.deepStrictEqual(actual, expected);
+    });
   });
 });
