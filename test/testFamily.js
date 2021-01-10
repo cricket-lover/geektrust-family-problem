@@ -61,4 +61,40 @@ describe("#Family", () => {
       );
     });
   });
+
+  describe("getChildren", () => {
+    let expected = [];
+
+    it("should give the children of the parent when asked with a male parent", () => {
+      expected = ["Vila", "Chika"];
+      assert.deepStrictEqual(family.getChildren("Lika"), expected);
+    });
+
+    it("should give the children of the parent when asked with a male parent", () => {
+      expected = ["Vila", "Chika"];
+      assert.deepStrictEqual(family.getChildren("Vich"), expected);
+    });
+
+    it("should give empty array when there are no children to the given parent", () => {
+      expected = [];
+      assert.deepStrictEqual(family.getChildren("Ish"), expected);
+    });
+  });
+
+  describe("getRelationship", () => {
+    let expected;
+    let actual;
+
+    it("should give son when the parent has only one son", () => {
+      expected = ["Yodhan"];
+      actual = family.getRelationship("Jaya", "Son");
+      assert.deepStrictEqual(actual, expected);
+    });
+
+    it("should give all sons when the parent has many sons", () => {
+      expected = ["Asva", "Vyas"];
+      actual = family.getRelationship("Vyan", "Son");
+      assert.deepStrictEqual(actual, expected);
+    });
+  });
 });

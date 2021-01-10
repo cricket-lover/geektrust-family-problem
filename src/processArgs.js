@@ -13,6 +13,10 @@ const processCommands = function (commands) {
       output = family.addChild(...args);
     }
 
+    if (operation === "GET_RELATIONSHIP") {
+      output = family.getRelationship(...args);
+    }
+
     result.push(output);
   });
 

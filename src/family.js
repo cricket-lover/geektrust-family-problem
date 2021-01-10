@@ -24,18 +24,42 @@ class Family {
     }
 
     mother.children.push(newChild);
-    this.family[newChild] = { gender: "Male", wife: null, mother: motherName };
+    this.family[newChild] = { gender: "Male", mother: motherName };
 
     if (gender === "Female") {
       this.family[newChild] = {
         gender: "Female",
-        husband: null,
         children: [],
         mother: motherName,
       };
     }
 
     return "CHILD_ADDITION_SUCCEEDED";
+  }
+
+  getChildren(parentName) {
+    const parent = this.family[parentName];
+    const motherName = parent.gender === "Male" ? parent.wife : parentName;
+    const children = motherName ? this.family[motherName].children : [];
+    return children;
+  }
+
+  getRelationship(name, relation) {
+    let relationship = [];
+
+    switch (relation) {
+      case "Son":
+        const children = this.getChildren(name);
+        relationship = children.filter(
+          (child) => this.family[child].gender === "Male"
+        );
+        break;
+
+      default:
+        break;
+    }
+
+    return relationship;
   }
 }
 
