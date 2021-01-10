@@ -1,19 +1,17 @@
 const { Family } = require("./family");
 
 const initailFamily = {
-  Shan: { gender: "Male", wife: "Anga", mother: null },
+  Shan: { gender: "Male", wife: "Anga" },
   Anga: {
     gender: "Female",
     husband: "Shan",
     children: ["Chit", "Ish", "Vich", "Aras", "Satya"],
-    mother: null,
   },
   chit: { gender: "Male", wife: "Amba", mother: "Anga" },
   amba: {
     gender: "Female",
     husband: "Chit",
     children: ["Dritha", "Tritha", "Vritha"],
-    mother: null,
   },
 };
 
