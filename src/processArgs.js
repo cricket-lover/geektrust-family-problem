@@ -1,5 +1,5 @@
 const { Family } = require("./family");
-const presetFamily = require("../presetFamily");
+const presetFamily = require("../presetFamily.json");
 
 const performOperation = function (family, operation, ...args) {
   let output;

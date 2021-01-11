@@ -1,8 +1,8 @@
 const { readFileSync } = require("fs");
 const { processCommands } = require("./src/processArgs");
 
-const main = function (testFile) {
-  const fileContent = readFileSync(testFile, "utf-8");
+const main = function (testFilePath) {
+  const fileContent = readFileSync(testFilePath, "utf-8");
   const commands = fileContent.split("\n");
 
   const result = processCommands(commands);
