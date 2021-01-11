@@ -1,6 +1,6 @@
 class Family {
-  constructor(initialFamily) {
-    this.family = initialFamily;
+  constructor(presetFamily) {
+    this.family = presetFamily;
   }
 
   doesPersonExist(name) {
@@ -24,14 +24,10 @@ class Family {
     }
 
     mother.children.push(newChild);
-    this.family[newChild] = { gender: "Male", mother: motherName };
+    this.family[newChild] = { gender: gender, mother: motherName };
 
     if (gender === "Female") {
-      this.family[newChild] = {
-        gender: "Female",
-        children: [],
-        mother: motherName,
-      };
+      this.family[newChild].children = [];
     }
 
     return "CHILD_ADDITION_SUCCEEDED";
