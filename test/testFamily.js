@@ -81,6 +81,34 @@ describe("#Family", () => {
     });
   });
 
+  describe("getParents", () => {
+    it("should give both the parents when the parent are known", () => {
+      expected = { mother: "Amba", father: "Chit" };
+      actual = family.getParents("Vritha");
+      assert.deepStrictEqual(actual, expected);
+    });
+
+    it("should give undefined when the person has no siblings", () => {
+      expected = { mother: undefined, father: undefined };
+      actual = family.getParents("Shan");
+      assert.deepStrictEqual(actual, expected);
+    });
+  });
+
+  describe("Siblings", () => {
+    it("should give all Siblings when the parent has many Siblings", () => {
+      expected = ["Dritha", "Vritha"];
+      actual = family.getSiblings("Tritha");
+      assert.deepStrictEqual(actual, expected);
+    });
+
+    it("should give none when the person has no siblings", () => {
+      expected = [];
+      actual = family.getSiblings("Shan");
+      assert.deepStrictEqual(actual, expected);
+    });
+  });
+
   describe("getRelationship", () => {
     let expected;
     let actual;
@@ -127,16 +155,110 @@ describe("#Family", () => {
       });
     });
 
-    describe("getParents", () => {
-      it("should give both the parents when the parent are known", () => {
-        expected = { mother: "Amba", father: "Chit" };
-        actual = family.getParents("Vritha");
+    describe("Paternal-Uncle", () => {
+      it("should give Paternal-Uncle if the person has paternal uncle", () => {
+        expected = "Asva";
+        actual = family.getRelationship("Kriya", "Paternal-Uncle");
         assert.deepStrictEqual(actual, expected);
       });
 
-      it("should give undefined when the person has no siblings", () => {
-        expected = { mother: undefined, father: undefined };
-        actual = family.getParents("Shan");
+      it("should give none if the person has no paternal uncle", () => {
+        expected = "NONE";
+        actual = family.getRelationship("Jaya", "Paternal-Uncle");
+        assert.deepStrictEqual(actual, expected);
+      });
+    });
+
+    describe("Paternal-Aunt", () => {
+      it("should give Paternal-Aunt if the person has paternal aunt", () => {
+        expected = "Atya";
+        actual = family.getRelationship("Kriya", "Paternal-Aunt");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give none if the person has no paternal aunt", () => {
+        expected = "NONE";
+        actual = family.getRelationship("Jaya", "Paternal-Aunt");
+        assert.deepStrictEqual(actual, expected);
+      });
+    });
+
+    describe("Maternal-Uncle", () => {
+      it("should give Maternal-Uncle if the person has Maternal uncle", () => {
+        expected = "Ahit";
+        actual = family.getRelationship("Laki", "Maternal-Uncle");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give none if the person has no Maternal uncle", () => {
+        expected = "NONE";
+        actual = family.getRelationship("Vasa", "Maternal-Uncle");
+        assert.deepStrictEqual(actual, expected);
+      });
+    });
+
+    describe("Maternal-Aunt", () => {
+      it("should give Maternal-Aunt if the person has Maternal aunt", () => {
+        expected = "Tritha";
+        actual = family.getRelationship("Yodhan", "Maternal-Aunt");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give none if the person has no Maternal aunt", () => {
+        expected = "NONE";
+        actual = family.getRelationship("Vila", "Maternal-Aunt");
+        assert.deepStrictEqual(actual, expected);
+      });
+    });
+
+    describe("Sister-In-Law", () => {
+      it("should give Sister-In-Law if the person has Sister in law", () => {
+        expected = "Satya";
+        actual = family.getRelationship("Lika", "Sister-In-Law");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give Sister-In-Law if the person has Sister in law", () => {
+        expected = "Satvy";
+        actual = family.getRelationship("Vyas", "Sister-In-Law");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give Sister-In-Law if the person has Sister in law", () => {
+        expected = "Amba Lika Chitra";
+        actual = family.getRelationship("Ish", "Sister-In-Law");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give none if the person has no sister in law", () => {
+        expected = "NONE";
+        actual = family.getRelationship("Vila", "Sister-In-Law");
+        assert.deepStrictEqual(actual, expected);
+      });
+    });
+
+    describe("Brother-In-Law", () => {
+      it("should give Brother-In-Law if the person has Brother in law", () => {
+        expected = "Jaya";
+        actual = family.getRelationship("Vritha", "Brother-In-Law");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give Brother-In-Law if the person has Brother in law", () => {
+        expected = "Ahit";
+        actual = family.getRelationship("Arit", "Brother-In-Law");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give Brother-In-Law if the person has Brother in law", () => {
+        expected = "Chit Ish Vich Aras";
+        actual = family.getRelationship("Vyan", "Brother-In-Law");
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      it("should give none if the person has no Brother in law", () => {
+        expected = "NONE";
+        actual = family.getRelationship("Vila", "Brother-In-Law");
         assert.deepStrictEqual(actual, expected);
       });
     });
