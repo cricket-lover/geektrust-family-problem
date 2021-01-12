@@ -62,17 +62,21 @@ class Family {
     return this.getChildren(name, "Female");
   }
 
-  getPaternalRelation(name, gender) {
-    const { father } = this.getParents(name);
-    let paternalAunt = [];
+  getPiblings(gender, parent) {
+    let piblings = [];
 
-    if (father) {
-      paternalAunt = this.getSiblings(father).filter(
+    if (parent) {
+      piblings = this.getSiblings(parent).filter(
         (sibling) => this.family[sibling].gender === gender
       );
     }
 
-    return paternalAunt;
+    return piblings;
+  }
+
+  getPaternalRelation(name, gender) {
+    const { father } = this.getParents(name);
+    return this.getPiblings(gender, father);
   }
 
   getPaternalUncle(name) {
@@ -85,15 +89,7 @@ class Family {
 
   getMaternalRelation(name, gender) {
     const { mother } = this.getParents(name);
-    let maternalRelation = [];
-
-    if (mother) {
-      maternalRelation = this.getSiblings(mother).filter(
-        (sibling) => this.family[sibling].gender === gender
-      );
-    }
-
-    return maternalRelation;
+    return this.getPiblings(gender, mother);
   }
 
   getMaternalUncle(name) {
@@ -120,7 +116,7 @@ class Family {
   getSpoucesOfSiblings(name, spouce) {
     const siblings = this.getSiblings(name);
     const marriedSiblings = siblings.filter(
-      (sibling) => this.family[sibling][spouce]
+      (sibling) => this.family[sibling][spouce] !== undefined
     );
     const spoucesOfSiblings = marriedSiblings.map(
       (sibling) => this.family[sibling][spouce]
