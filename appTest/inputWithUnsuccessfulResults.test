@@ -1,0 +1,6 @@
+node geektrust.js ./inputResources/inputWithUnsuccessfulResults.txt
+PERSON_NOT_FOUND 
+PERSON_NOT_FOUND
+CHILD_ADDITION_FAILED 
+NONE
+Satvy Krpi
