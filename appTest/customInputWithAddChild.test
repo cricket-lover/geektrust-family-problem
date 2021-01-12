@@ -1,0 +1,4 @@
+node geektrust.js ./inputResources/customInputWithAddChild.txt
+CHILD_ADDITION_SUCCEEDED
+CHILD_ADDITION_FAILED
+PERSON_NOT_FOUND
