@@ -62,25 +62,6 @@ describe("#Family", () => {
     });
   });
 
-  describe("getChildren", () => {
-    let expected = [];
-
-    it("should give the children of the parent when asked with a male parent", () => {
-      expected = ["Vila", "Chika"];
-      assert.deepStrictEqual(family.getChildren("Lika"), expected);
-    });
-
-    it("should give the children of the parent when asked with a male parent", () => {
-      expected = ["Vila", "Chika"];
-      assert.deepStrictEqual(family.getChildren("Vich"), expected);
-    });
-
-    it("should give empty array when there are no children to the given parent", () => {
-      expected = [];
-      assert.deepStrictEqual(family.getChildren("Ish"), expected);
-    });
-  });
-
   describe("getParents", () => {
     it("should give both the parents when the parent are known", () => {
       expected = { mother: "Amba", father: "Chit" };

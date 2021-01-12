@@ -33,10 +33,11 @@ class Family {
     return "CHILD_ADDITION_SUCCEEDED";
   }
 
-  getChildren(parentName) {
+  getChildren(parentName, gender) {
     const parent = this.family[parentName];
     const motherName = parent.gender === "Male" ? parent.wife : parentName;
-    const children = motherName ? this.family[motherName].children : [];
+    let children = motherName ? this.family[motherName].children : [];
+    children = children.filter((child) => this.family[child].gender === gender);
     return children;
   }
 
@@ -53,106 +54,105 @@ class Family {
     return { mother, father };
   }
 
-  getRelationship(name, relation) {
+  getSon(name) {
+    return this.getChildren(name, "Male");
+  }
+
+  getDaughter(name) {
+    return this.getChildren(name, "Female");
+  }
+
+  getPaternalRelation(name, gender) {
+    const { father } = this.getParents(name);
+    let paternalAunt = [];
+
+    if (father) {
+      paternalAunt = this.getSiblings(father).filter(
+        (sibling) => this.family[sibling].gender === gender
+      );
+    }
+
+    return paternalAunt;
+  }
+
+  getPaternalUncle(name) {
+    return this.getPaternalRelation(name, "Male");
+  }
+
+  getPaternalAunt(name) {
+    return this.getPaternalRelation(name, "Female");
+  }
+
+  getMaternalRelation(name, gender) {
+    const { mother } = this.getParents(name);
+    let maternalRelation = [];
+
+    if (mother) {
+      maternalRelation = this.getSiblings(mother).filter(
+        (sibling) => this.family[sibling].gender === gender
+      );
+    }
+
+    return maternalRelation;
+  }
+
+  getMaternalUncle(name) {
+    return this.getMaternalRelation(name, "Male");
+  }
+
+  getMaternalAunt(name) {
+    return this.getMaternalRelation(name, "Female");
+  }
+
+  getSiblingsOfSpouce(name, gender) {
+    const spouce = this.getSpouce(name);
+    let siblingsOfSpouce = [];
+
+    if (spouce) {
+      siblingsOfSpouce = this.getSiblings(spouce).filter(
+        (sibling) => this.family[sibling].gender === gender
+      );
+    }
+
+    return siblingsOfSpouce;
+  }
+
+  getSpoucesOfSiblings(name, spouce) {
+    const siblings = this.getSiblings(name);
+    const marriedSiblings = siblings.filter(
+      (sibling) => this.family[sibling][spouce]
+    );
+    const spoucesOfSiblings = marriedSiblings.map(
+      (sibling) => this.family[sibling][spouce]
+    );
+
+    return spoucesOfSiblings;
+  }
+
+  getSisterInLaw(name) {
+    const sistersOfSpouce = this.getSiblingsOfSpouce(name, "Female");
+    const wivesOfSiblings = this.getSpoucesOfSiblings(name, "wife");
+
+    return [...sistersOfSpouce, ...wivesOfSiblings];
+  }
+
+  getBrotherInLaw(name) {
+    const brothersOfSpouce = this.getSiblingsOfSpouce(name, "Male");
+    const husbandsOfSiblings = this.getSpoucesOfSiblings(name, "husband");
+
+    return [...brothersOfSpouce, ...husbandsOfSiblings];
+  }
+
+  getRelationship(name, relationship) {
     if (!this.doesPersonExist(name)) {
       return "PERSON_NOT_FOUND";
     }
 
-    let relationship = [];
-    let children = this.getChildren(name);
-    const { mother, father } = this.getParents(name);
-    let spouce = this.getSpouce(name);
-    const siblings = this.getSiblings(name);
+    const relation = relationship.replace(/-/g, "");
+    const requiredMethod = `get${relation}`;
+    const relatives = this[requiredMethod](name);
 
-    switch (relation) {
-      case "Son":
-        relationship = children.filter(
-          (child) => this.family[child].gender === "Male"
-        );
-        break;
-
-      case "Daughter":
-        relationship = children.filter(
-          (child) => this.family[child].gender === "Female"
-        );
-        break;
-
-      case "Siblings":
-        relationship = this.getSiblings(name);
-        break;
-
-      case "Paternal-Uncle":
-        if (father) {
-          relationship = this.getSiblings(father).filter(
-            (sibling) => this.family[sibling].gender === "Male"
-          );
-        }
-        break;
-
-      case "Paternal-Aunt":
-        if (father) {
-          relationship = this.getSiblings(father).filter(
-            (sibling) => this.family[sibling].gender === "Female"
-          );
-        }
-        break;
-
-      case "Maternal-Uncle":
-        if (mother) {
-          relationship = this.getSiblings(mother).filter(
-            (sibling) => this.family[sibling].gender === "Male"
-          );
-        }
-        break;
-
-      case "Maternal-Aunt":
-        if (mother) {
-          relationship = this.getSiblings(mother).filter(
-            (sibling) => this.family[sibling].gender === "Female"
-          );
-        }
-        break;
-
-      case "Sister-In-Law":
-        let sistersOfSpouce = [];
-
-        if (spouce) {
-          sistersOfSpouce = this.getSiblings(spouce).filter(
-            (sibling) => this.family[sibling].gender === "Female"
-          );
-        }
-
-        const marriedMaleSiblings = siblings.filter(
-          (sibling) => this.family[sibling].wife !== undefined
-        );
-        const wivesOfSiblings = marriedMaleSiblings.map(
-          (sibling) => this.family[sibling].wife
-        );
-
-        relationship = [...sistersOfSpouce, ...wivesOfSiblings];
-        break;
-
-      case "Brother-In-Law":
-        let brothersOfSpouce = [];
-
-        if (spouce) {
-          brothersOfSpouce = this.getSiblings(spouce).filter(
-            (sibling) => this.family[sibling].gender === "Male"
-          );
-        }
-
-        const marriedFemaleSiblings = siblings.filter(
-          (sibling) => this.family[sibling].husband !== undefined
-        );
-        const husbandsOfSiblings = marriedFemaleSiblings.map(
-          (sibling) => this.family[sibling].husband
-        );
-
-        relationship = [...brothersOfSpouce, ...husbandsOfSiblings];
-        break;
-    }
-
-    return relationship.length ? relationship.join(" ") : "NONE";
+    return relatives.length ? relatives.join(" ") : "NONE";
   }
 }
 
