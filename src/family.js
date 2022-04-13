@@ -21,19 +21,19 @@ class Family {
     return person.gender === MALE ? person.wife : person.husband;
   }
 
-  addChild(motherName, newChild, gender) {
-    if (!this.doesPersonExist(motherName)) {
+  addChild(parentName, newChild, gender) {
+    if (!this.doesPersonExist(parentName)) {
       return PERSON_NOT_FOUND_MESSAGE;
     }
 
-    const mother = this.family[motherName];
+    const mother = this.family[parentName];
 
     if (mother.gender === MALE) {
       return CHILD_ADDITION_FAILED_MESSAGE;
     }
 
     mother.children.push(newChild);
-    this.family[newChild] = { gender: gender, mother: motherName };
+    this.family[newChild] = { gender: gender, mother: parentName };
 
     if (gender === FEMALE) {
       this.family[newChild].children = [];
